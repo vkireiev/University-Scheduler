@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Forbidden</title>
+</head>
+<body>
+	<h1>403 Permission Denied</h1>
+	<p>You do not have permission to access this resource.</p><th:block th:if="${datetime}">
+		<hr />
+		<span th:text="${datetime}">{datetime}</span></th:block>
+</body>
+</html>

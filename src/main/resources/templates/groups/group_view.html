@@ -1,0 +1,64 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center w-50"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" /><th:block th:if="${group_view}"><th:block sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 text-end w-75 mb-1">
+            <span><th:block sec:authorize="hasAuthority('EDITOR')">[ <a th:href="@{/groups/edit/{id}(id=${group_view.id})}">edit</a> ]</th:block><th:block sec:authorize="hasAuthority('ADMIN')">[ <a th:href="@{/admin/groups/delete/{id}(id=${group_view.id})}" onclick="return confirm('Are you sure?')">delete</a> ]</th:block></span>
+        </div></th:block>
+        <form th:object="${group_view}" name="form_disabled_group_profile" id="form_disabled_group_profile" method="POST"><th:block th:if="${err_upd_group_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" style="max-width: 640px;" th:each="err : ${err_upd_group_profile}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_group_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_group_profile}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card w-75">
+            <div class="card-header"><h4>Group profile</h4></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="name" class="form-label">Group name:</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" th:field="*{name}" disabled>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="capacity" class="form-label">Group capacity:</label>
+                    <input type="number" class="form-control" id="capacity" min="1" max="30" step="1" placeholder="Enter capacity" name="capacity" th:field="*{capacity}" disabled>
+                </div>                
+            </div>
+        </div>
+        </form><br />
+        <table class="table">
+            <thead class="table-success">
+                <tr>
+                    <th>Student</th><th:block sec:authorize="hasAuthority('EDITOR') or hasAuthority('ADMIN')">
+                    <th width="100">Actions</th></th:block>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="student : ${group_view.getStudents()}">
+                    <td th:text="${student.firstName} + ' ' + ${student.lastName}">${student.name}</td><th:block sec:authorize="hasAuthority('EDITOR') or hasAuthority('ADMIN')">
+                    <td><a th:href="@{/students/edit/{id}(id=${student.id})}">edit</a></td></th:block>
+                </tr>
+            </tbody>
+        </table><th:block th:if="${err_upd_group_courses}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center w-75" style="max-width: 640px;" th:each="err : ${err_upd_group_courses}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_group_courses}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center w-75" style="max-width: 640px;" th:each="msg : ${msg_upd_group_courses}">
+            <span th:text="${msg}"></span>
+        </div></th:block>
+        <table class="table">
+            <thead class="table-success">
+                <tr>
+                    <th>Course</th><th:block sec:authorize="hasAuthority('EDITOR') or hasAuthority('ADMIN')">
+                    <th width="100">Actions</th></th:block>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="course : ${group_view.getCourses()}">
+                    <td th:text="${course.name}">${course.name}</td><th:block sec:authorize="hasAuthority('EDITOR') or hasAuthority('ADMIN')">
+                    <td><a th:href="@{/groups/edit/{id_group}/courses/delete/{id_course}(id_group=${group_view.id}, id_course=${course.id})}" onclick="return confirm('Are you sure?')" th:text="'remove'">remove</a></td></th:block>
+                </tr>
+            </tbody>
+        </table></th:block>                
+	</div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

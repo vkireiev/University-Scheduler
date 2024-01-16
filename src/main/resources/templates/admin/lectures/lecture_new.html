@@ -1,0 +1,69 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center w-75"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+        <th:block th:if="${new_lecture} and ${availableAuditoriums} and ${allCourses} and ${allGroups} and ${allLecturers} and ${timeSlots}"><form th:action="@{/admin/lectures/new}" th:object="${new_lecture}" name="form_new_lecture" id="form_new_lecture" method="POST">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><th:block th:replace="~{fragments/modules :: moduleName0-h4}">{modules}</th:block></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="name" class="form-label">Lecture subject</label><span th:if="${#fields.hasErrors('subject')}" class="text-danger small pt-1 float-end">Lecture subject required. Length should range from 8 to 100 characters</span>
+                    <input type="text" class="form-control" id="name" placeholder="Enter lecture subject" name="subject" th:field="*{subject}" required pattern="[A-Za-z0-9 ]{8,100}" oninvalid="this.setCustomValidity('Lecture subject required. Length should range from 8 to 100 characters')" oninput="this.setCustomValidity('')">
+                </div>     
+                <div class="mb-3 mt-3">
+                    <label for="auditorium" class="form-label">Specify Auditorium</label><span th:if="${#fields.hasErrors('auditorium')}" class="text-danger small pt-1 float-end">Need to specify a Auditorium</span>
+                    <select class="form-select" th:field="*{auditorium}" required>
+                        <option value="" text=""></option>
+                        <option th:each="currAuditorium : ${availableAuditoriums}" th:value="${currAuditorium.id}" th:text="${currAuditorium.number}"></option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="lectureDate" class="form-label">Specify Lecture date:</label><span th:if="${#fields.hasErrors('lectureDate')}" class="text-danger small pt-1 float-end">Lecture date required</span>
+                    </div>
+                    <div class="col">
+                        <label for="timeSlot" class="form-label">Specify Lecture time interval</label><span th:if="${#fields.hasErrors('timeSlot')}" class="text-danger small pt-1 float-end">Lecture time interval required</span>
+                    </div>                    
+                </div>                 
+                <div class="row">
+                    <div class="col">
+                        <input type="date" class="form-control" id="lectureDate" name="lectureDate" th:field="*{lectureDate}" required oninvalid="this.setCustomValidity('Lecture date required')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col">
+                        <select class="form-select" th:field="*{timeSlot}" required>
+                            <option value="" text=""></option>
+                            <option th:each="currTimeSlot : ${timeSlots}" th:value="${currTimeSlot}" th:text="${currTimeSlot.timeBegin} + ' - ' + ${currTimeSlot.timeEnd}"></option>
+                        </select>
+                    </div>                    
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="course" class="form-label">Specify Course</label><span th:if="${#fields.hasErrors('course')}" class="text-danger small pt-1 float-end">Need to specify a Course</span>
+                    <select class="form-select" th:field="*{course}" required>
+                        <option value="" text=""></option>
+                        <option th:each="currCourse : ${allCourses}" th:value="${currCourse.id}" th:text="${currCourse.name}"></option>
+                    </select>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="lecturer" class="form-label">Specify Lecturer</label><span th:if="${#fields.hasErrors('lecturer')}" class="text-danger small pt-1 float-end">Need to specify a Lecturer</span>
+                    <select class="form-select" th:field="*{lecturer}" required>
+                        <option value="" text=""></option>
+                        <option th:each="currLecturer : ${allLecturers}" th:value="${currLecturer.id}" th:text="${currLecturer.firstName} + ' ' + ${currLecturer.lastName}"></option>
+                    </select>
+                </div>                
+                <div class="mb-3 mt-3">
+                    <label for="groups" class="form-label">Specify Group*</label><span th:if="${#fields.hasErrors('groups')}" class="text-danger small pt-1 float-end">Need to specify a Group</span>
+                    <select class="form-select" th:field="*{groups}" required>
+                        <option value="" text=""></option>
+                        <option th:each="currGroup : ${allGroups}" th:value="${currGroup.id}" th:text="${currGroup.name}"></option>
+                    </select>
+                    <span class="small pt-1 float-begin">* The ability to specify multiple Groups will be available in the Lecture editing mode</span>
+                </div>     
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form></th:block>
+    </div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

@@ -1,0 +1,94 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+        <th:block th:if="${upd_lecture_profile} and ${availableAuditoriums} and ${allCourses} and ${allLecturers} and ${timeSlots}"><form th:action="@{/lectures/edit/{id}(id=${upd_lecture_profile.id})}" th:object="${upd_lecture_profile}" name="form_edit_lecture_profile" id="form_edit_lecture_profile" method="POST"><th:block th:if="${err_upd_lecture_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" style="max-width: 640px;" th:each="err : ${err_upd_lecture_profile}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_lecture_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_lecture_profile}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><h4>Edit Lecture profile</h4></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="name" class="form-label">Lecture subject:</label><span th:if="${#fields.hasErrors('subject')}" class="text-danger small pt-1 float-end">Lecture subject required. Length should range from 8 to 100 characters</span>
+                    <input type="text" class="form-control" id="name" placeholder="Enter lecture subject" name="subject" th:field="*{subject}" required pattern="[A-Za-z0-9 ]{8,100}" oninvalid="this.setCustomValidity('Lecture subject required. Length should range from 8 to 100 characters')" oninput="this.setCustomValidity('')">
+                </div>     
+                <div class="mb-3 mt-3">
+                    <label for="auditorium" class="form-label">Specify Auditorium</label><span th:if="${#fields.hasErrors('auditorium')}" class="text-danger small pt-1 float-end">Need to specify a Auditorium</span>
+                    <select class="form-select" th:field="*{auditorium}" required>
+                        <option value="" text=""></option>
+                        <option th:each="currAuditorium : ${availableAuditoriums}" th:value="${currAuditorium.id}" th:text="${currAuditorium.number}"></option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="lectureDate" class="form-label">Lecture date:</label><span th:if="${#fields.hasErrors('lectureDate')}" class="text-danger small pt-1 float-end">Lecture date required</span>
+                    </div>
+                    <div class="col">
+                        <label for="timeSlot" class="form-label">Specify Lecture time interval</label><span th:if="${#fields.hasErrors('timeSlot')}" class="text-danger small pt-1 float-end">Lecture time interval required</span>
+                    </div>                    
+                </div>                 
+                <div class="row">
+                    <div class="col">
+                        <input type="date" class="form-control" id="lectureDate" name="lectureDate" th:field="*{lectureDate}" required oninvalid="this.setCustomValidity('Lecture date required')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col">
+                        <select class="form-select" th:field="*{timeSlot}" required>
+                            <option value="" text=""></option>
+                            <option th:each="currTimeSlot : ${timeSlots}" th:value="${currTimeSlot}" th:text="${currTimeSlot.timeBegin} + ' - ' + ${currTimeSlot.timeEnd}"></option>
+                        </select>
+                    </div>                    
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="course" class="form-label">Specify Course</label><span th:if="${#fields.hasErrors('course')}" class="text-danger small pt-1 float-end">Need to specify a Course</span>
+                    <select class="form-select" th:field="*{course}" required>
+                        <option value="" text=""></option>
+                        <option th:each="currCourse : ${allCourses}" th:value="${currCourse.id}" th:text="${currCourse.name}"></option>
+                    </select>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="lecturer" class="form-label">Specify Lecturer</label><span th:if="${#fields.hasErrors('lecturer')}" class="text-danger small pt-1 float-end">Need to specify a Lecturer</span>
+                    <select class="form-select" th:field="*{lecturer}" required>
+                        <option value="" text=""></option>
+                        <option th:each="currLecturer : ${allLecturers}" th:value="${currLecturer.id}" th:text="${currLecturer.firstName} + ' ' + ${currLecturer.lastName}"></option>
+                    </select>
+                </div>                
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form><br /></th:block><th:block th:if="${upd_lecture_groups}"><th:block th:if="${err_upd_lecture_groups}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" style="max-width: 640px;" th:each="err : ${err_upd_lecture_groups}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_lecture_groups}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_lecture_groups}">
+            <span th:text="${msg}"></span>
+        </div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><h4>Change Groups for Lecture</h4></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <style type="text/css">
+                        .tableFixHead          { overflow: auto; height: 250px; }
+                        .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+                        table  { border-collapse: collapse; width: 100%; }
+                    </style>
+                    <div class="tableFixHead">
+                        <table>
+                            <tbody><th:block th:if="${upd_lecture_groups.getGroups().size()} > 0">
+                                <tr th:each="group : ${upd_lecture_groups.getGroups()}"><td th:text="${group.name}">${group.name}</td><td class="text-end pe-2"><a th:href="@{/lectures/edit/{id_lecture}/groups/delete/{id_group}(id_lecture=${upd_lecture_groups.id}, id_group=${group.id})}" onclick="return confirm('Are you sure?')" th:text="'delete'">{delete}</a></td></tr><th:block th:if="${upd_lecture_groups.getGroups().size()} > 0 and ${addGroupsList} and ${addGroupsList.size()} > 0">
+                                <tr><td colspan="2"><hr /></td></tr></th:block><th:block th:if="${addGroupsList} and ${addGroupsList.size()} > 0">
+                                <tr th:each="group : ${addGroupsList}"><td th:text="${group.name}">${group.name}</td><td class="text-end pe-2"><a th:href="@{/lectures/edit/{id_lecture}/groups/add/{id_group}(id_lecture=${upd_lecture_groups.id}, id_group=${group.id})}" onclick="return confirm('Are you sure?')" th:text="'add'">{add}</a></td></tr></th:block>
+                                </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><br /></th:block>
+    </div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

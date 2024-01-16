@@ -1,0 +1,57 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+        <th:block th:if="${upd_group_profile}"><form th:action="@{/groups/edit/{id}(id=${upd_group_profile.id})}" th:object="${upd_group_profile}" name="form_edit_group_profile" id="form_edit_group_profile" method="POST"><th:block th:if="${err_upd_group_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" style="max-width: 640px;" th:each="err : ${err_upd_group_profile}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_group_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_group_profile}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><th:block th:replace="~{fragments/modules :: moduleName0-h4}">{modules}</th:block></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="name" class="form-label">Group name:</label><span th:if="${#fields.hasErrors('name')}" class="text-danger small pt-1 float-end">Group name required. Length should range from 8 to 50 characters</span>
+                    <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" th:field="*{name}" required pattern="[A-Za-z0-9\ \@\#\$\%\^\&\*\(\)\_\+]{8,50}" oninvalid="this.setCustomValidity('Group name required. Length should range from 8 to 50 characters')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="capacity" class="form-label">Group capacity:</label><span th:if="${#fields.hasErrors('capacity')}" class="text-danger small pt-1 float-end">Group capacity required. The value should range from 1 to 30</span>
+                    <input type="number" class="form-control" id="capacity" min="1" max="30" step="1" placeholder="Enter capacity" name="capacity" th:field="*{capacity}" required oninvalid="this.setCustomValidity('Group capacity required. The value should range from 1 to 30')" oninput="this.setCustomValidity('')">
+                </div>                
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form><br /></th:block><th:block th:if="${upd_group_courses}"><th:block th:if="${err_upd_group_courses}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" style="max-width: 640px;" th:each="err : ${err_upd_group_courses}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_group_courses}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_group_courses}">
+            <span th:text="${msg}"></span>
+        </div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><h4>Change Courses for Group</h4></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <style type="text/css">
+                        .tableFixHead          { overflow: auto; height: 250px; }
+                        .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+                        table  { border-collapse: collapse; width: 100%; }
+                    </style>
+                    <div class="tableFixHead">
+                        <table>
+                            <tbody><th:block th:if="${upd_group_courses.getCourses().size()} > 0">
+                                <tr th:each="course : ${upd_group_courses.getCourses()}"><td th:text="${course.name}">${course.name}</td><td class="text-end pe-2"><a th:href="@{/groups/edit/{id_group}/courses/delete/{id_course}(id_group=${upd_group_courses.id}, id_course=${course.id})}" onclick="return confirm('Are you sure?')" th:text="'delete'">{delete}</a></td></tr></th:block><th:block th:if="${upd_group_courses.getCourses().size()} > 0 and ${addCoursesList} and ${addCoursesList.size()} > 0">
+                                <tr><td colspan="2"><hr /></td></tr></th:block><th:block th:if="${addCoursesList} and ${addCoursesList.size()} > 0">
+                                <tr th:each="course : ${addCoursesList}"><td th:text="${course.name}">${course.name}</td><td class="text-end pe-2"><a th:href="@{/groups/edit/{id_group}/courses/add/{id_course}(id_group=${upd_group_courses.id}, id_course=${course.id})}" onclick="return confirm('Are you sure?')" th:text="'add'">{add}</a></td></tr></th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><br /></th:block>
+    </div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

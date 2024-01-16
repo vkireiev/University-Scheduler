@@ -1,0 +1,88 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+        <th:block th:if="${form_type} and ${new_user}"><form th:action="(${form_type} == 'employee') ? @{/admin/employees/new} : @{/admin/students/new}" th:object="${new_user}" name="form_new_user" id="form_new_user" method="POST" oninput='confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "Passwords do not match." : "")'><th:block th:if="${err_new_user}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" style="max-width: 640px;" th:each="err : ${err_new_user}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_new_user}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_new_user}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><th:block th:replace="~{fragments/modules :: moduleName0-h4}">{modules}</th:block></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="username" class="form-label">Username:</label><span th:if="${#fields.hasErrors('username')}" class="text-danger small pt-1 float-end">Username required. Length should range from 8 to 50 characters</span>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" th:field="*{username}" required pattern="[A-Za-z0-9]{8,50}" oninvalid="this.setCustomValidity('Username required. Length should range from 8 to 50 characters')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="email" class="form-label">E-mail:</label><span th:if="${#fields.hasErrors('email')}" class="text-danger small pt-1 float-end">E-mail required. Length should range above 8 characters</span>
+                    <input type="email" class="form-control" id="email" placeholder="Enter e-mail" name="email" th:field="*{email}" required oninvalid="this.setCustomValidity('E-mail required. Length should range above 8 characters')" oninput="this.setCustomValidity('')">
+                </div>                
+                <div class="row">
+                    <div class="col">
+                        <label for="password" class="form-label">Password:</label>
+                    </div>
+                    <div class="col">
+                        <label for="confirmPassword" class="form-label">Confirm password:</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="password" class="form-control" autocomplete="off" id="password" placeholder="Enter password" name="password" th:field="*{password}" required pattern=".{8,255}" oninvalid="this.setCustomValidity('Password required')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col">
+                        <input type="password" class="form-control" autocomplete="off" id="confirmPassword" placeholder="Confirm password" name="confirmPassword" required>
+                    </div>
+                </div>                
+                <div class="mb-3 mt-3">
+                    <label for="firstname" class="form-label">First name:</label><span th:if="${#fields.hasErrors('firstName')}" class="text-danger small pt-1 float-end">First name required. Length should range from 3 to 100 characters</span>
+                    <input type="text" class="form-control" id="firstname" placeholder="Enter first name" name="firstname" th:field="*{firstName}" required pattern="[A-Za-z0-9]{3,100}" oninvalid="this.setCustomValidity('First name required. Length should range from 3 to 100 characters')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="lastname" class="form-label">Last name:</label><span th:if="${#fields.hasErrors('lastName')}" class="text-danger small pt-1 float-end">Last name required. Length should range from 3 to 100 characters</span>
+                    <input type="text" class="form-control" id="lastname" placeholder="Enter last name" name="lastname" th:field="*{lastName}" required pattern="[A-Za-z0-9]{3,100}" oninvalid="this.setCustomValidity('Last name required. Length should range from 3 to 100 characters')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="phonenumber" class="form-label">Phone number:</label><span th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger small pt-1 float-end">Phone number required. Length should range from 3 to 16 digits</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" id="phonenumber" placeholder="Enter phone number" name="phonenumber" th:field="*{phoneNumber}" required pattern="[0-9]{3,16}" oninvalid="this.setCustomValidity('Phone number required. Length should range from 3 to 16 digits')" oninput="this.setCustomValidity('')">
+                    </div>
+                </div>                
+                <div class="row pt-3">
+                    <div class="col">
+                        <label for="birthday" class="form-label">Birthday:</label><span th:if="${#fields.hasErrors('birthday')}" class="text-danger small pt-1 float-end">Birthday required</span>
+                    </div>
+                    <div class="col">
+                    </div>                    
+                </div>                 
+                <div class="row">
+                    <div class="col">
+                        <input type="date" class="form-control" id="birthday" name="birthday" th:field="*{birthday}" required oninvalid="this.setCustomValidity('Birthday required')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col">
+                    </div>                    
+                </div><th:block th:if="(${form_type} == 'employee') and ${allEmployeeType}">
+                <div class="mt-3">
+                    <label for="employeeType" class="form-label">Specify the Employee type</label><span th:if="${#fields.hasErrors('employeeType')}" class="text-danger small pt-1 float-end">Need to specify Employee type</span>
+                    <select class="form-select" th:field="*{employeeType}" required>
+                        <option th:each="currType : ${allEmployeeType}" th:value="${currType}" th:text="${currType}"></option>
+                    </select>                
+                </div></th:block>
+                <div class="form-check form-switch pt-3">
+                    <input class="form-check-input" type="checkbox" id="locked" name="locked" th:field="*{locked}" value="no">
+                    <label class="form-check-label" for="locked">Lock account</label>
+                </div>      
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form></th:block>
+    </div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

@@ -1,0 +1,45 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title0}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+	<div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+	<div class="container p-3 justify-content-center"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+		<h2>
+			Welcome to <u th:text="${applicationName}">${applicationName}</u>
+		</h2>
+		<p>
+			<b>University-Scheduler</b> is a web application for planning /
+			editing / viewing the schedule of the lectures at the University.
+		</p>
+		<hr />
+		<div class="small">
+		<p>'username1' / 'password' => '<b>EMPLOYEE</b>' with ['<b>VIEWER</b>', '<b>EDITOR</b>', '<b>ADMIN</b>'] roles</p>
+        <p>'username2' / 'password' => '<b>EMPLOYEE</b>' with ['<b>VIEWER</b>', '<b>EDITOR</b>'] roles</p>
+        <p>'username3' / 'password' => '<b>EMPLOYEE</b>' with ['<b>VIEWER</b>'] roles</p>
+        <p>'username4' / 'password' => '<b>EMPLOYEE</b>' without roles</p>
+        <br />
+        <p>'username51' / 'password' => '<b>STUDENT</b>' with ['<b>VIEWER</b>', '<b>EDITOR</b>', '<b>ADMIN</b>'] roles</p>
+        <p>'username52' / 'password' => '<b>STUDENT</b>' with ['<b>VIEWER</b>', '<b>EDITOR</b>'] roles</p>
+        <p>'username53' / 'password' => '<b>STUDENT</b>' with ['<b>VIEWER</b>'] roles</p>
+        <p>'username54' / 'password' => '<b>STUDENT</b>' without roles</p>
+        <hr />
+        <p>[<a href="/">Home</a>] [<a href="/lectures">My Schedule</a>] [<a href="/courses">Courses</a>] [<a href="/groups">Groups</a>] [<a href="/auditoriums">Auditoriums</a>] [<a href="/lecturers">Lecturers</a>] [<a href="/employees">Employees</a>] [<a href="/students">Students</a>]</p>
+        <p>[Admin] [<a href="/admin/users">Users</a>] [<a href="/admin/auditoriums/new">add Auditorium</a>] [<a href="/admin/groups/new">add Group</a>] [<a href="/admin/courses/new">add Course</a>] [<a href="/admin/lectures/new">add Lecture</a>]</p>
+        <p>[Profile] [<a href="/profile/edit">Edit Profile</a>]</p>
+        <hr /><th:block sec:authorize="isAuthenticated()">
+        <div sec:authorize="hasRole('VIEWER')">has role '<b>VIEWER</b>'</div>
+        <div sec:authorize="hasRole('EDITOR')">has role '<b>EDITOR</b>'</div>
+        <div sec:authorize="hasRole('ADMIN')">has role '<b>ADMIN</b>'</div>
+        <div sec:authorize="hasRole('STUDENT')">has role '<b>STUDENT</b>'</div>
+        <div sec:authorize="hasRole('EMPLOYEE')">has role '<b>EMPLOYEE</b>'</div>
+        <br />
+        <div sec:authorize="hasAuthority('VIEWER')">has authority '<b>VIEWER</b>'</div>
+        <div sec:authorize="hasAuthority('EDITOR')">has authority '<b>EDITOR</b>'</div>
+        <div sec:authorize="hasAuthority('ADMIN')">has authority '<b>ADMIN</b>'</div>
+        <div sec:authorize="hasAuthority('STUDENT')">has authority '<b>STUDENT</b>'</div>
+        <div sec:authorize="hasAuthority('EMPLOYEE')">has authority '<b>EMPLOYEE</b>'</div>
+        <br /></th:block>
+        <div th:text="${#authentication}"></div>
+        <hr />
+        </div>
+	</div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

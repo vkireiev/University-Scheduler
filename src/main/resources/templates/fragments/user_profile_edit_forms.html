@@ -1,0 +1,134 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="form_edit_user_profile"><form th:action="@{/profile/edit/{id}/profile(id=${upd_user_profile.id})}" th:object="${upd_user_profile}" name="form_user_change_profile" id="form_user_change_profile" method="POST"><th:block th:if="${err_upd_user_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" th:each="err : ${err_upd_user_profile}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_user_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_user_profile}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header">
+                <div class="float-start"><h4>Edit profile</h4></div>
+            </div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="firstname" class="form-label">First name</label><span th:if="${#fields.hasErrors('firstName')}" class="text-danger small pt-1 float-end">First name required. Length should range from 3 to 100 characters</span>
+                    <input type="text" class="form-control" id="firstname" placeholder="Enter first name" name="firstname" th:field="*{firstName}" required pattern="[A-Za-z0-9]{3,100}" oninvalid="this.setCustomValidity('First name required. Length should range from 3 to 100 characters')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="lastname" class="form-label">Last name</label><span th:if="${#fields.hasErrors('lastName')}" class="text-danger small pt-1 float-end">Last name required. Length should range from 3 to 100 characters</span>
+                    <input type="text" class="form-control" id="lastname" placeholder="Enter last name" name="lastname" th:field="*{lastName}" required pattern="[A-Za-z0-9]{3,100}" oninvalid="this.setCustomValidity('Last name required. Length should range from 3 to 100 characters')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="phonenumber" class="form-label">Phone number</label><span th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger small pt-1 float-end">Phone number required. Length should range from 3 to 16 digits</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" id="phonenumber" placeholder="Enter phone number" name="phonenumber" th:field="*{phoneNumber}" required pattern="[0-9]{3,16}" oninvalid="this.setCustomValidity('Phone number required. Length should range from 3 to 16 digits')" oninput="this.setCustomValidity('')">
+                    </div>
+                </div>                
+                <div class="row pt-3">
+                    <div class="col">
+                        <label for="birthday" class="form-label">Birthday</label><span th:if="${#fields.hasErrors('birthday')}" class="text-danger small pt-1 float-end">Birthday required</span>
+                    </div>
+                    <div class="col">
+                    </div>                    
+                </div>                 
+                <div class="row">
+                    <div class="col">
+                        <input type="date" class="form-control" id="birthday" name="birthday" th:field="*{birthday}" required oninvalid="this.setCustomValidity('Birthday required')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col">
+                    </div>                    
+                </div>
+                <div class="pt-2"><hr></div>
+                <div class="row">
+                    <div class="col">
+                        <label for="curr_password" class="form-label">Current password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="password" class="form-control" autocomplete="off" id="curr_password" placeholder="Enter current password" name="curr_password" required pattern=".{8,255}" oninvalid="this.setCustomValidity('Current password required')" oninput="this.setCustomValidity('')">
+                    </div>
+                </div>                
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form></th:block>
+        
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="form_edit_user_email"><form th:action="@{/profile/edit/{id}/email(id=${upd_user_pswd.id})}" th:object="${upd_user_email}" name="form_user_change_email" id="form_user_change_email" method="POST"><th:block th:if="${err_upd_user_email}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" th:each="err : ${err_upd_user_email}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_user_email}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_user_email}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><h4>Change email</h4></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="email" class="form-label">Email:</label><span th:if="${#fields.hasErrors('email')}" class="text-danger small pt-1 float-end">E-mail required. Length should range above 8 characters</span>
+                    <input type="email" class="form-control" id="email" placeholder="Enter e-mail" name="email" th:field="*{email}" required oninvalid="this.setCustomValidity('E-mail required. Length should range above 8 characters')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="pt-2"><hr></div>
+                <div class="row">
+                    <div class="col">
+                        <label for="curr_password" class="form-label">Current password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="password" class="form-control" autocomplete="off" id="curr_password" placeholder="Enter current password" name="curr_password" required oninvalid="this.setCustomValidity('Current password required')" oninput="this.setCustomValidity('')">
+                    </div>
+                </div>                
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form></th:block>
+        
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="form_edit_user_password"><form th:action="@{/profile/edit/{id}/password(id=${upd_user_pswd.id})}" th:object="${upd_user_pswd}" name="form_user_change_password" id="form_user_change_password" method="POST" oninput='confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "Passwords do not match." : "")'><th:block th:if="${err_upd_user_pswd}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" th:each="err : ${err_upd_user_pswd}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_user_pswd}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_user_pswd}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><h4>Change password</h4></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <label for="password" class="form-label">New password</label>
+                    </div>
+                    <div class="col">
+                        <label for="confirmPassword" class="form-label">Confirm new password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="password" class="form-control" autocomplete="off" id="password" placeholder="Enter new password" name="password" th:field="*{password}" required pattern=".{8,255}" oninvalid="this.setCustomValidity('New password required. Length should range from 8 to 255 characters')" oninput="this.setCustomValidity('')">
+                    </div>
+                    <div class="col">
+                        <input type="password" class="form-control" autocomplete="off" id="confirmPassword" placeholder="Confirm new password" name="confirmPassword" required>
+                    </div>
+                </div> 
+                <div class="pt-2"><hr></div>
+                <div class="row">
+                    <div class="col">
+                        <label for="curr_password" class="form-label">Current password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="password" class="form-control" autocomplete="off" id="curr_password" placeholder="Enter current password" name="curr_password" required oninvalid="this.setCustomValidity('Current password required')" oninput="this.setCustomValidity('')">
+                    </div>
+                </div>                
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form></th:block>        

@@ -1,0 +1,40 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="admin_form_edit_student_group"><form th:action="'/admin/students/edit/' + ${upd_user_group.getId()} + '/group'" th:object="${upd_user_group}" name="form_change_group" id="form_change_group" method="POST"><th:block th:if="${err_upd_user_group}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" style="max-width: 640px;" th:each="err : ${err_upd_user_group}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_user_group}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_user_group}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><h4>Change Student Group</h4></div>
+            <div class="card-body">
+                <label for="group" class="form-label">Specify the Group for Student</label><span th:if="${#fields.hasErrors('group')}" class="text-danger small pt-1 float-end">Need to specify a Group</span>
+                <select class="form-select" th:field="*{group}">
+                    <option th:each="currGroup : ${allGroups}" th:value="${currGroup.getId()}" th:text="${currGroup.getName()}"></option>
+                </select>
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form></th:block>
+        
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="admin_form_edit_user_roles"><form th:action="(${form_type} == 'employee') ? '/admin/employees/edit/' + ${upd_user_roles.getId()} + '/roles' : '/admin/students/edit/' + ${upd_user_roles.getId()} + '/roles'" th:object="${upd_user_roles}" name="form_change_roles" id="form_change_roles" method="POST"><th:block th:if="${err_upd_user_roles}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" style="max-width: 640px;" th:each="err : ${err_upd_user_roles}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_user_roles}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_user_roles}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><h4>Change <th:block th:text="(${form_type} == 'employee') ? 'Employee' : 'Student'">Student</th:block> access roles</h4></div>
+            <div class="card-body">
+                <label for="userRoles" class="form-label">Select <th:block th:text="(${form_type} == 'employee') ? 'Employee' : 'Student'">Student</th:block> access roles</label><span th:if="${#fields.hasErrors('userRoles')}" class="text-danger small pt-1 float-end">Select at least one access role</span>
+                <div class="form-check" th:each="role: ${allRoles}">
+                    <input type="checkbox" class="form-check-input" name="userroles[]" th:field="*{userRoles}" th:value="${role}">
+                    <label class="form-check-label" th:text="${role.name}">VIEWER</label>
+                </div>
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form></th:block>

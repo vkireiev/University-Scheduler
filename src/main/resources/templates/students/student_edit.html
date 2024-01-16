@@ -1,0 +1,9 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+        <th:block th:if="${form_type} and ${upd_user_profile}"><th:block th:replace="~{fragments/user_edit_forms :: form_disabled_user_profile}" /><br /></th:block>
+        <th:block th:if="${allGroups} and ${upd_user_group}"><th:block th:replace="~{fragments/user_edit_forms :: form_edit_student_group}" /><br /></th:block>
+    </div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

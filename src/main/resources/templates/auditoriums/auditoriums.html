@@ -1,0 +1,29 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center w-50"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+        <div class="clearfix">
+            <span class="float-start"><th:block th:replace="~{fragments/modules :: moduleName1-h3}">{modules}</th:block></span><th:block sec:authorize="hasAuthority('ADMIN')">
+            <span class="float-end mt-2">[ <a th:href="@{/admin/auditoriums/new}">Add new Auditorium</a> ]</span></th:block>
+        </div>
+        <table th:if="${auditoriums}" class="table">
+            <thead class="table-success">
+                <tr>
+                    <th>Number</th>
+                    <th width="200">Capacity</th>
+                    <th width="200">Availability</th><th:block sec:authorize="hasAuthority('EDITOR') or hasAuthority('ADMIN')">
+                    <th class="text-center" width="100">Actions</th></th:block>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="auditorium : ${auditoriums}">
+                    <td><a th:href="@{/auditoriums/view/{id}(id=${auditorium.id})}" th:text="${auditorium.number}">{number}</a></td>
+                    <td th:text="${auditorium.capacity}">{capacity}</td>
+                    <td th:text="(${auditorium.available} == true) ? 'yes' : 'no'">{available}</td><th:block sec:authorize="hasAuthority('EDITOR') or hasAuthority('ADMIN')">
+                    <td class="text-center"><a th:href="@{/auditoriums/edit/{id}(id=${auditorium.id})}">edit</a><th:block sec:authorize="hasAuthority('ADMIN')"> / <a th:href="@{admin/auditoriums/delete/{id}(id=${auditorium.id})}" onclick="return confirm('Are you sure?')">delete</a></th:block></td></th:block>
+                </tr>
+            </tbody>
+        </table>
+	</div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

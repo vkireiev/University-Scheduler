@@ -1,0 +1,6 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title0}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" /></div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

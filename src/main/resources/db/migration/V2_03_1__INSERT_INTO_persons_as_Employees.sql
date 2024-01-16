@@ -1,0 +1,5 @@
+-- Employees
+ALTER SEQUENCE IF EXISTS "persons_id_seq" RESTART WITH 26;
+INSERT INTO public."persons" (id, birthday, email, firstname, lastname, "locked", "password", phone_number, register_date, username, user_type) VALUES(26, '1989-01-11', 'Miller.Noah@gmain.com', 'Noah', 'Miller', false, '$2a$10$Hm.M8gPjefRDMxVZCdl0s.xXJvc8h6QK/1SBWNqnwxIRX8Tqq2Qem', 'phone-0811590512', '2023-01-01 00:00:00.000', 'username26', 2);
+INSERT INTO public."persons" (id, birthday, email, firstname, lastname, "locked", "password", phone_number, register_date, username, user_type) VALUES(27, '2000-07-16', 'Thomas.Levi@gmain.com', 'Levi', 'Thomas', false, '$2a$10$Hm.M8gPjefRDMxVZCdl0s.xXJvc8h6QK/1SBWNqnwxIRX8Tqq2Qem', 'phone-7330666038', '2023-01-01 00:00:00.000', 'username27', 2);
+INSERT INTO public."persons" (id, birthday, email, firstname, lastname, "locked", "password", phone_number, register_date, username, user_type) VALUES(28, '1981-11-03', 'Perez.Logan@gmain.com', 'Logan', 'Perez', false, '$2a$10$Hm.M8gPjefRDMxVZCdl0s.xXJvc8h6QK/1SBWNqnwxIRX8Tqq2Qem', 'phone-5887429939', '2023-01-01 00:00:00.000', 'username28', 2);

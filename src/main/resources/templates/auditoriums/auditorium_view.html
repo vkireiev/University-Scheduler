@@ -1,0 +1,44 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center w-50"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" /><th:block th:if="${auditorium_view}"><th:block th:if="${auditorium_view}" sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 text-end w-75 mb-1">
+            <span><th:block sec:authorize="hasAuthority('EDITOR')">[ <a th:href="@{/auditoriums/edit/{id}(id=${auditorium_view.id})}">edit</a> ]</th:block><th:block sec:authorize="hasAuthority('ADMIN')">[ <a th:href="@{/admin/auditoriums/delete/{id}(id=${auditorium_view.id})}" onclick="return confirm('Are you sure?')">delete</a> ]</th:block></span>
+        </div></th:block>
+        
+        <form th:object="${auditorium_view}" name="form_disabled_auditorium_profile" id="form_disabled_auditorium_profile" method="POST">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card w-75">
+            <div class="card-header"><h4>Auditorium profile</h4></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="number" class="form-label">Auditorium number</label>
+                    <input type="text" class="form-control" id="number" placeholder="Auditorium number" name="number" th:field="*{number}" disabled>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="capacity" class="form-label">Auditorium capacity</label>
+                    <input type="number" class="form-control" id="capacity" min="10" max="300" step="1" placeholder="Auditorium capacity" name="capacity" th:field="*{capacity}" disabled>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="available" name="available" th:field="*{available}" value="yes" checked disabled>
+                    <label class="form-check-label" for="available">Auditorium availability</label>
+                </div>      
+            </div>
+        </div>
+        </form><br /><th:block th:if="${upcomingLectures} and ${upcomingLectures.size()} > 0">
+        <table class="table">
+            <thead class="table-success">
+                <tr>
+                    <th>Upcoming Lectures in Auditorium</th><th:block sec:authorize="hasAuthority('EDITOR') or hasAuthority('ADMIN')">
+                    <th width="100">Actions</th></th:block>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="lecture : ${upcomingLectures}">
+                    <td th:text="${lecture.lectureDate} + ', course \'' + ${lecture.course.name} + '\', lecturer ' + ${lecture.lecturer.lastName} + ' ' + ${lecture.lecturer.firstName}">{lecture}</td><th:block sec:authorize="hasAuthority('EDITOR') or hasAuthority('ADMIN')">
+                    <td><a th:href="@{/lectures/edit/{id}(id=${lecture.id})}">edit</a><th:block sec:authorize="hasAuthority('ADMIN')"> / <a th:href="@{/admin/lectures/delete/{id}(id=${lecture.id})}" onclick="return confirm('Are you sure?')">delete</a></th:block></td>
+                </tr>
+            </tbody>
+        </table></th:block></th:block>
+    </div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

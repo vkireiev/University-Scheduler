@@ -1,0 +1,25 @@
+-- Lecturers
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(1, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(1, 1);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(1, 2);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(2, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(2, 1);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(3, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(5, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(5, 1);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(6, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(6, 1);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(7, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(7, 1);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(8, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(8, 1);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(9, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(9, 1);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(10, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(10, 1);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(11, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(11, 1);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(12, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(13, 2);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(13, 0);
+INSERT INTO public."persons_user_roles" (person_id, user_role) VALUES(13, 1);

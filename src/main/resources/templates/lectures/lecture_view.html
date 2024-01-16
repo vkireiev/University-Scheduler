@@ -1,0 +1,77 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center w-50"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" /><th:block th:if="${err_upd_lecture_groups}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center w-100" style="max-width: 640px;" th:each="err : ${err_upd_lecture_groups}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_lecture_groups}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center w-100" style="max-width: 640px;" th:each="msg : ${msg_upd_lecture_groups}">
+            <span th:text="${msg}"></span>
+        </div></th:block><th:block th:if="${lecture_view}"><th:block sec:authorize="hasAnyAuthority('EDITOR', 'ADMIN')">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 text-end w-75 mb-1">
+            <span><th:block sec:authorize="hasAuthority('EDITOR')">[ <a th:href="@{/lectures/edit/{id}(id=${lecture_view.id})}">edit</a> ]</th:block><th:block sec:authorize="hasAuthority('ADMIN')">[ <a th:href="@{/admin/lectures/delete/{id}(id=${lecture_view.id})}" onclick="return confirm('Are you sure?')">delete</a> ]</th:block></span>
+        </div></th:block><form th:object="${lecture_view}" name="form_disabled__lecture_profile" id="form_disabled__lecture_profile" method="POST">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card w-75">
+            <div class="card-header"><h4>Lecture profile</h4></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="name" class="form-label">Lecture subject</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter lecture subject" name="subject" th:field="*{subject}" disabled>
+                </div>     
+                <div class="mb-3 mt-3">
+                    <label for="auditorium" class="form-label">Auditorium</label>
+                    <select class="form-select" th:field="*{auditorium}" disabled>
+                        <option value="" text=""></option>
+                        <option th:each="currAuditorium : ${lecture_view.auditorium}" th:value="${currAuditorium.id}" th:text="${currAuditorium.number}"></option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="lectureDate" class="form-label">Lecture date</label>
+                    </div>
+                    <div class="col">
+                        <label for="timeSlot" class="form-label">Lecture time interval</label>
+                    </div>                    
+                </div>                 
+                <div class="row">
+                    <div class="col">
+                        <input type="date" class="form-control" id="lectureDate" name="lectureDate" th:field="*{lectureDate}" disabled>
+                    </div>
+                    <div class="col">
+                        <select class="form-select" th:field="*{timeSlot}" disabled>
+                            <option value="" text=""></option>
+                            <option th:each="currTimeSlot : ${lecture_view.timeSlot}" th:value="${currTimeSlot}" th:text="${currTimeSlot.timeBegin} + ' - ' + ${currTimeSlot.timeEnd}"></option>
+                        </select>
+                    </div>                    
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="course" class="form-label">Course</label>
+                    <select class="form-select" th:field="*{course}" disabled>
+                        <option value="" text=""></option>
+                        <option th:each="currCourse : ${lecture_view.course}" th:value="${currCourse.id}" th:text="${currCourse.name}"></option>
+                    </select>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="lecturer" class="form-label">Lecturer</label>
+                    <select class="form-select" th:field="*{lecturer}" disabled>
+                        <option value="" text=""></option>
+                        <option th:each="currLecturer : ${lecture_view.lecturer}" th:value="${currLecturer.id}" th:text="${currLecturer.firstName} + ' ' + ${currLecturer.lastName}"></option>
+                    </select>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="groups" class="form-label">Groups</label><th:block th:if="${lecture_view.getGroups()} and ${lecture_view.getGroups().size()} > 0">
+                    <div th:each="group : ${lecture_view.getGroups()}" class="form-control mb-1" style="background-color:var(--bs-secondary-bg)">
+                        <div style="position:relative; height: 100%;">
+                            <span th:text="${group.name}">{group}</span>
+                            <div sec:authorize="hasAuthority('EDITOR') or hasAuthority('ADMIN')" style="position:absolute;right:0px; top:0px;"><a th:href="@{/lectures/edit/{id_lecture}/groups/delete/{id_group}(id_lecture=${lecture_view.id}, id_group=${group.id})}" onclick="return confirm('Are you sure?')" th:text="'remove'">remove</a></div>
+                        </div>
+                    </div></th:block><th:block th:unless="${lecture_view.getGroups()} and ${lecture_view.getGroups().size()} > 0">
+                        <div class="form-control mb-1" style="background-color:var(--bs-secondary-bg)">No Groups assigned to the Lecture</div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+        </form><br /></th:block>
+    </div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

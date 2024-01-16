@@ -1,0 +1,10 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+        <th:block th:if="${upd_user_profile}"><th:block th:replace="~{fragments/user_profile_edit_forms :: form_edit_user_profile}" /><br /></th:block>
+        <th:block th:if="${upd_user_email}"><th:block th:replace="~{fragments/user_profile_edit_forms :: form_edit_user_email}" /><br /></th:block>       
+        <th:block th:if="${upd_user_pswd}"><th:block th:replace="~{fragments/user_profile_edit_forms :: form_edit_user_password}" /><br /></th:block>       
+    </div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />

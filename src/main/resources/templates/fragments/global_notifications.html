@@ -1,0 +1,11 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="global_notifications"><th:block th:if="${gErrors} or ${gMessages}"><th:block th:replace="~{fragments/global_notifications :: global_errors}" /><th:block th:replace="~{fragments/global_notifications :: global_messages}" /></th:block></th:block>
+
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="global_errors"><th:block th:if="${gErrors}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center w-75" style="max-width: 640px;" th:each="error : ${gErrors}">
+            <span th:text="${error}"></span>
+        </div></th:block></th:block>
+        
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="global_messages"><th:block th:if="${gMessages}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center w-75" style="max-width: 640px;" th:each="message : ${gMessages}">
+            <span th:text="${message}"></span>
+        </div></th:block>

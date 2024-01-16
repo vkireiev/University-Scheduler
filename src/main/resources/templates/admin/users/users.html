@@ -1,0 +1,51 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+	<div class="container p-3 justify-content-center w-75"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+		<div class="clearfix">
+			<span class="float-start"><th:block	th:replace="~{fragments/modules :: moduleName0-h3}">{modules}</th:block></span>
+			<span class="float-end mt-2">[ <a th:href="@{/admin/employees/new}">Add new Employee</a> ]&nbsp;[ <a th:href="@{/admin/students/new}">Add new Student</a> ]</span>
+		</div>
+		<table class="table">
+			<thead class="table-success">
+				<tr>
+                    <th>Name</th>
+					<th>Username</th>
+					<th width="300">Email</th>
+					<th width="120">Type</th>
+					<th width="100">Actions</th>
+				</tr>
+			</thead>
+			<th:block th:if="${userComparator}" th:with="sortUsers = ${#lists.sort(users, userComparator)}">
+			<tbody>
+                <tr>
+                    <td th:colspan="5" class="pt-0 pb-0">
+                    <th:block th:each="user,iterStat : ${sortUsers}">
+                        <a th:if="${iterStat.first}" th:href="'#' + ${#strings.toUpperCase(user.lastName[0])}" th:text="'#' + ${#strings.toUpperCase(user.lastName[0])}" th:class="'ms-0 me-1'">${user.lastName[0]}</a>
+                        <th:block th:unless="${iterStat.first}">
+                            <th:block th:if="(${#strings.toUpperCase(user.lastName[0])} != ${sortUsers[iterStat.index-1].lastName[0]})">
+                            <a th:href="'#' + ${#strings.toUpperCase(user.lastName[0])}" th:text="'#' + ${#strings.toUpperCase(user.lastName[0])}" th:class="'me-1'">${user.lastName[0]}</a>
+                            </th:block>
+                        </th:block>
+                    </th:block>
+                    </td>
+                </tr>
+				<tr th:each="user,iterStat : ${sortUsers}">
+                    <td th:if="${iterStat.first}"><a th:id="${#strings.toUpperCase(user.lastName[0])}" th:text="${user.lastName} + ' ' + ${user.firstName}">{Name}</a></td><td th:unless="${iterStat.first}"><th:block th:if="(${user.lastName[0]} != ${users[iterStat.index-1].lastName[0]})"><a th:id="${#strings.toUpperCase(user.lastName[0])}" th:text="${user.lastName} + ' ' + ${user.firstName}">{Name}</a></th:block><th:block th:unless="(${user.lastName[0]} != ${users[iterStat.index-1].lastName[0]})" th:text="${user.lastName} + ' ' + ${user.firstName}">{Name}</th:block></td>
+					<td th:text="${user.getUsername()}">{Username}</td>
+					<td th:text="${user.getEmail()}">{Email}</td>
+					<td><th:block th:if="${user.getClass().getSimpleName()} == 'Employee'" th:text="${user.employeeType.typeEmployee}">{Type}</th:block><th:block th:if="${user.getClass().getSimpleName()} == 'Student'" th:text="${user.getClass().getSimpleName()}">{Type}</th:block></td>
+					<td><a th:href="(${user.getClass().getSimpleName() == 'Student'}) ? @{/admin/students/edit/{id}(id=${user.id})} : @{/admin/employees/edit/{id}(id=${user.id})}">edit</a> / <a th:href="(${user.getClass().getSimpleName() == 'Student'}) ? @{/admin/students/delete/{id}(id=${user.id})} : @{/admin/employees/delete/{id}(id=${user.id})}" onclick="return confirm('Are you sure?')">delete</a></td>
+				</tr>
+			</tbody>
+			</th:block>
+			<th:block th:unless="${userComparator}">
+            <tbody>
+                <tr><td colspan="5" class="pt-0 pb-0">Nothing to show</td></tr>
+            </tbody>
+            </th:block>
+		</table>
+	</div>
+</body>
+</html>

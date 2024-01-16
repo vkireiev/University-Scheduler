@@ -1,0 +1,34 @@
+<th:block th:replace="~{fragments/html_blocks :: start_block}" />
+<th:block th:replace="~{fragments/head_titles :: title1}" />
+<th:block th:replace="~{fragments/html_blocks :: links_block}" />
+    <div th:replace="~{fragments/navbar :: navbar}">{navbar}</div>
+    <div class="container p-3 justify-content-center"><th:block th:replace="~{fragments/global_notifications :: global_notifications}" />
+        <th:block th:if="${upd_auditorium_profile}"><form th:action="@{/auditoriums/edit/{id}(id=${upd_auditorium_profile.id})}" th:object="${upd_auditorium_profile}" name="form_edit_auditorium_profile" id="form_edit_auditorium_profile" method="POST"><th:block th:if="${err_upd_auditorium_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-danger text-center" th:each="err : ${err_upd_auditorium_profile}">
+            <span th:text="${err}"></span>
+        </div></th:block><th:block th:if="${msg_upd_auditorium_profile}">
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 alert alert-secondary text-center" style="max-width: 640px;" th:each="msg : ${msg_upd_auditorium_profile}">
+            <span th:text="${msg}"></span></div></th:block>
+        <div class="mx-auto col-lg-6 col-md-6 col-sm-6 card">
+            <div class="card-header"><h4>Edit Auditorium profile</h4></div>
+            <div class="card-body">
+                <div class="mb-0 mt-0">
+                    <label for="number" class="form-label">Auditorium number:</label><span th:if="${#fields.hasErrors('number')}" class="text-danger small pt-1 float-end">Auditorium number required. Length should range from 3 to 10 characters</span>
+                    <input type="text" class="form-control" id="number" placeholder="Enter auditorium number" name="number" th:field="*{number}" required pattern="[A-Za-z0-9]{3,10}" oninvalid="this.setCustomValidity('Auditorium number required. Length should range from 3 to 10 characters')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="capacity" class="form-label">Auditorium capacity:</label><span th:if="${#fields.hasErrors('capacity')}" class="text-danger small pt-1 float-end">Auditorium capacity required. The value should range from 10 to 300</span>
+                    <input type="number" class="form-control" id="capacity" min="10" max="300" step="1" placeholder="Enter auditorium capacity" name="capacity" th:field="*{capacity}" required oninvalid="this.setCustomValidity('Auditorium capacity required. The value should range from 10 to 300')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="available" name="available" th:field="*{available}" value="yes" checked>
+                    <label class="form-check-label" for="available">Auditorium availability</label>
+                </div>      
+            </div>
+            <div class="card-footer clearfix">
+                <button type="submit" class="float-end btn btn-md btn-primary">Submit</button>
+            </div>        
+        </div>
+        </form></th:block>
+    </div>
+<th:block th:replace="~{fragments/html_blocks :: end_block}" />
